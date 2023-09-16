@@ -1,26 +1,19 @@
 package main
 
 import (
-	"context"
-	"log"
-	"spotify-go/api"
-	"spotify-go/utils"
-	"spotify-go/tasks"
+	"fmt"
+	"net/http"
+	"spotify-go/handler"
 )
 
 func main() {
-	ctx := context.Background()
-	scheduler := utils.NewTaskScheduler()
-	sClient, err := api.NewSpotifyClient()
+	http.HandleFunc("/auth", handler.AuthHandler)
+	http.HandleFunc("/", handler.CallbackHandler)
+	http.HandleFunc("/playing", handler.CurrentlyPlayingHandler)
+	http.HandleFunc("/start",handler.StartTaskHandler)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		log.Fatalf(err.Error())
-		return
+		fmt.Println("Error:", err)
 	}
-
-	taskInteractor := tasks.NewTaskInteractor(sClient,scheduler)
-	taskInteractor.StartCurrentlyListeningWatcher(ctx)
-
-	scheduler.Start()
-
 	select {}
 }

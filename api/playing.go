@@ -9,7 +9,7 @@ import (
 )
 
 func (s *SpotifyClient) GetCurrentlyPlayingSong(ctx context.Context) *structs.CurrentlyPlayingSong {
-	currentlyPlaying, err := s.C.PlayerCurrentlyPlaying(ctx)
+	currentlyPlaying, err := s.Client.PlayerCurrentlyPlaying(ctx)
 	if err != nil {
 		log.Fatalf("Unable to get currently playing track: %v", err)
 		return nil
