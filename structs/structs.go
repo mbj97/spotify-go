@@ -1,6 +1,7 @@
 package structs
 
 type CurrentlyPlayingSong struct {
-	Name string
-	ID   string
+	Name     string
+	ID       string
+	IsActive bool
 }
